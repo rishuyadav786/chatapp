@@ -67,11 +67,11 @@ chats:any=[];
 
 ngOnInit(): void {
   
-  this.commonService.getAll().subscribe((data: Help[]) => {
-    this.users = data;
-   ;
-    // console.log("user Data" + JSON.stringify(this.users))
-  })
+  // this.commonService.getAll().subscribe((data: Help[]) => {
+  //   this.users = data;
+  //  ;
+  //   // console.log("user Data" + JSON.stringify(this.users))
+  // })
 }
 ngAfterViewChecked() {        
   this.scrollToBottom();        

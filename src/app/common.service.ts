@@ -16,9 +16,9 @@ export class CommonService {
   }
 
    
-  getAll(): Observable<Help[]> {
-    return <any>this.http.get( `${this.webUrl}`+"api/AllMessage/").pipe(map((Response: any) => Response));
-  }
+  // getAll(): Observable<Help[]> {
+  //   return <any>this.http.get( `${this.webUrl}`+"api/AllMessage/").pipe(map((Response: any) => Response));
+  // }
   
 removeProduct(items){
   console.log("coming.....")

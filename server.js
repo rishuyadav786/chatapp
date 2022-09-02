@@ -227,18 +227,18 @@ Chats.remove({}, function (err) {
 })
 
 
-app.get("/api/AllMessage", function (req, res) {
-    Chats.find({}, function (err, data) {
-        if (err) {
-            res.send(err)
-        }
-        else {
-            console.log("User data retrieved successfully")
-            res.send(data)
+// app.get("/api/AllMessage", function (req, res) {
+//     Chats.find({}, function (err, data) {
+//         if (err) {
+//             res.send(err)
+//         }
+//         else {
+//             console.log("User data retrieved successfully")
+//             res.send(data)
 
-        }
-    })
-});
+//         }
+//     })
+// });
 
 
 // io.on('connection', (socket) => {

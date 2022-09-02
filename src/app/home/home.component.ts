@@ -30,13 +30,13 @@ export class HomeComponent implements OnInit {
   }
   user: Help = new Help()
   ngOnInit(): void {
-    console.log("All msg from home 1 = " + JSON.stringify(this.users))
+    
      
-  this.commonService.getAll().subscribe((data: Help[]) => {
-    this.users = data;
-   ;
-    console.log("All msg from home  2= " + JSON.stringify(this.users))
-  })
+  // this.commonService.getAll().subscribe((data: Help[]) => {
+  //   this.users = data;
+  //  ;
+  //   console.log("All msg from home  2= " + JSON.stringify(this.users))
+  // })
     this.activeUser= localStorage.getItem("myUserName");
     if(this.activeUser){
       
