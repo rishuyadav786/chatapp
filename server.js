@@ -10,13 +10,30 @@ const port = process.env.PORT || 3000;
 
 // const requestListener = function (req, res) {};
 
+// const requestListener = function (req, res) {
+//     res.setHeader("Content-Type", "application/json");
+//     res.writeHead(200);
+//     res.end(`{"message": "This is a JSON response"}`);
+// };
+
 const requestListener = function (req, res) {
     res.setHeader("Content-Type", "application/json");
-    res.writeHead(200);
-    res.end(`{"message": "This is a JSON response"}`);
-};
-
-
+    switch (req.url) {
+        case "/books":
+            res.writeHead(200);
+            // res.end(books);
+            res.end(`{"message": "This is a books"}`);
+            break
+        case "/authors":
+            res.writeHead(200);
+            // res.end(authors);
+            res.end(`{"message": "This is a author"}`);
+            break
+        default:
+            res.writeHead(404);
+            res.end(JSON.stringify({error:"Resource not found Rishu"}));
+    }
+}
 
 
 const server = http.createServer(requestListener);
