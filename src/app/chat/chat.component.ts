@@ -51,8 +51,8 @@ chats:any=[];
     
       if (data) {
         // console.log("all data="+JSON.stringify(data))
-        this.messageList=this.chats
-        // this.messageList=data;
+        // this.messageList=this.chats
+        this.messageList=data;
       }
     });
 

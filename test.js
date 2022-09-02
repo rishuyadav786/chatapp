@@ -1,88 +1,21 @@
-const bodyParser = require("body-parser");
-const path = require("path")
+const express = require("express")();
+const cors = require("cors");
+const http = require("http").createServer(express);
+// const io = require("socket.io")(http);
+const { MongoClient } = require("mongodb");
 const mongo = require("mongoose");
-const nodemailer = require("nodemailer");//for email send...
-var port = process.env.PORT || 8000;
+const mongoPath = 'mongodb+srv://chatmaster:Rishu12345@cluster0.dwucphr.mongodb.net/?retryWrites=true&w=majority';
+// const client = new MongoClient(process.env['mongodb+srv://chatmaster:Rishu12345@cluster0.dwucphr.mongodb.net/?retryWrites=true&w=majority']);
 var myModule = require('./model2.js');
 const Chats = myModule.Chats;
-const Users = myModule.Users;
-const express = require('express');
-const cors = require('cors');
-var https = require('https');
-// var http = require('http');
-const app = express();
+express.use(cors());
 
-
-const http = require('http').createServer(app);
-// const io = require("socket.io")(http);
+var collection;
 const io = require('socket.io')(http, {
     cors: {
         origin: '*'
     }
 });
-
-// http.listen(process.env.PORT || 8000, () => {
-//     console.log(`Server is running ${process.env.PORT || 8000}`);
-// });
-
-http.listen(process.env.PORT || 8000, () => {
-    console.log(`Server is running ${process.env.PORT || 8000}`);
-});
-
-
-// var server = http.Server(app);
-
-
-
-
-// const server=http.createServer(app);
-// server.listen(port);
-
-// app.listen = function(){
-//     var server = http.createServer(app);
-//     console.log(`server is running on port ${port}`);
-//     return server.listen.apply(port);
-//   };
-
-// app.listen(port, () => {
-//     var server = http.createServer(this);
-//     console.log(`server is running on port ${port}`);
-//      return server.listen.apply(server, port);
-  
-//   });
-
-
-// const http3 = http.createServer(app);
-
-
-// app.listen(port, () => {
-  
-//     console.log(`server is running on port ${port}`);
-//   });
-  
-// http3.listen(8000);
-
-// http.createServer(app).listen(8000, ()=>{
-//     console.log('server is runing at port 8000')
-//   });
-
-
-// const io = require('socket.io')(server, {
-//     cors: {
-//         origin: '*'
-//     }
-// });
-
-
-// app.use(cors({ origin: "*" }));
-app.use(bodyParser.json());
-
-
-// ---------
-// const mongoPath = 'mongodb+srv://SenderChats:Rishu12345@cluster0.rwtbnbi.mongodb.net/?retryWrites=true&w=majority';
-const mongoPath = 'mongodb+srv://chatmaster:Rishu12345@cluster0.dwucphr.mongodb.net/?retryWrites=true&w=majority';
-
-// const mongoPath = "mongodb+srv://fdplazaa:Rishu12345@cluster0.48xj2.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 var db = mongo.connect(mongoPath, function (err, response) {
     if (err) {
         console.log("connection faild...." + err)
@@ -92,27 +25,27 @@ var db = mongo.connect(mongoPath, function (err, response) {
     }
 })
 
-// Serve only the static files form the dist directory
-app.use(express.static('./dist/chatapp'));
+http.listen(8000, async () => {
+    try {
+        // await client.connect();
+        // collection = client.db("chatmaster").collection("chats");
+        console.log("Listening on port :%s...", http.address().port);
+    } catch (e) {
+        console.error(e);
+    }
+});
 
-// http.listen(port, () => {
-//     console.log(`Server is running ${process.env.PORT || 8000}`);
-// });
 
-
-
-// app.listen(port, () => {
-//     // var server = http1.createServer(this);
-//     // return server.listen.apply(server, arguments);
-//     console.log(`server is running on port ${port}`);
-//   });
-  
-
-//   app.listen = function(){
-//     var server = http1.createServer(this);
-//     return server.listen.apply(server, port);
-//   };
-
+express.get("/api/AllMessage", async (request, response) => {
+    try {
+        // Chats.find({}, function (err, data) {
+            // let result = await collection.findOne({ "_id": request.query.room });
+        let result = await Chats.find({  });
+        response.send(result);
+    } catch (e) {
+        response.status(500).send({ message: e.message });
+    }
+});
 let userList = new Map();
 
 io.on('connection', (socket) => {
@@ -173,7 +106,7 @@ function removeUser(userName, id) {
 
 
 
-app.post("/api/deleteAllChat", function (req, res) {
+express.post("/api/deleteAllChat", function (req, res) {
     // model2.remove( { } );
     Chats.remove({ }, function (err) {
         if (err) {
@@ -185,7 +118,7 @@ app.post("/api/deleteAllChat", function (req, res) {
     })
 })
 
-app.post("/api/deleteAllChat", function (req, res) {
+express.post("/api/deleteAllChat", function (req, res) {
 
 
     var dbo = db.db("test");
@@ -211,7 +144,7 @@ app.post("/api/deleteAllChat", function (req, res) {
 })
 
 
-app.post("/api/removeData", function (req, res) {
+express.post("/api/removeData", function (req, res) {
     var mod = new Chats(req.body);
     console.log("id ="+JSON.stringify(mod))
 //   mod.remove( { } );
@@ -227,7 +160,7 @@ Chats.remove({}, function (err) {
 })
 
 
-app.get("/api/AllMessage", function (req, res) {
+express.get("/api/AllMessage", function (req, res) {
     Chats.find({}, function (err, data) {
         if (err) {
             res.send(err)
