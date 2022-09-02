@@ -195,6 +195,8 @@
 
 
 // -------------------------------------------------------------------------------------
+
+
 var express = require('express');
 var app = express();
 
@@ -235,7 +237,7 @@ http.createServer(function (req, res) {
    
 })
 
-
+res.writeHead(200, {'Content-Type': 'text/html'});
 
 switch (req.url) {
     case "/books":
@@ -260,31 +262,5 @@ Chats.find({},function(err, result) {
     res.end();
 })
 }
-
-
-
-
-
-
-
-
-
-
   
-}).listen(8080);
-
-
-// http.createServer(function (req, res) {
-
-// MongoClient.connect(mongoPath, function (err, client) {
-//   if (err) throw err;
-
-//   var db = client.db('myFirstDatabase');
-
-//   db.collection('chats').findOne({}, function (findErr, result) {
-//     if (findErr) throw findErr;
-//     console.log(result.name);
-//     client.close();
-//   });
-// })
-// }).listen(8080); 
+}).listen(process.env.PORT || 3000);
