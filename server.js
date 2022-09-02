@@ -8,11 +8,28 @@ const Chats = myModule.Chats;
 const Users = myModule.Users;
 const express = require('express');
 const cors = require('cors');
-
+var https = require('https');
+var http = require('http');
 const app = express();
-const http = require('http').createServer(app);
 
-const io = require('socket.io')(http, {
+
+
+// var server = http.Server(app);
+
+
+
+
+const server=http.createServer(app);
+server.listen(8000);
+// app.listen = function(){
+//     var server = http.createServer(this);
+//     return server.listen.apply(server, port);
+//   };
+
+
+// const http3 = require('http').createServer(app);
+
+const io = require('socket.io')(server, {
     cors: {
         origin: '*'
     }
@@ -21,6 +38,7 @@ const io = require('socket.io')(http, {
 
 app.use(cors({ origin: "*" }));
 app.use(bodyParser.json());
+
 
 // ---------
 // const mongoPath = 'mongodb+srv://SenderChats:Rishu12345@cluster0.rwtbnbi.mongodb.net/?retryWrites=true&w=majority';
@@ -39,19 +57,23 @@ var db = mongo.connect(mongoPath, function (err, response) {
 // Serve only the static files form the dist directory
 app.use(express.static('./dist/chatapp'));
 
+// http.listen(port, () => {
+//     console.log(`Server is running ${process.env.PORT || 8000}`);
+// });
 
-// ----------
-// app.get('/', (req, res) => {
-//     res.send('Heello world');
-// })
-// app.use(express.static('./dist/sender'));
 
-// app.get('/*', (req, res) =>{
 
-//     console.log(`rishu server is running on port ${port}`);
-//     res.sendFile('index.html', {root: 'dist/chatapp/'})
-// }
-// );
+// app.listen(port, () => {
+//     var server = http1.createServer(this);
+//     return server.listen.apply(server, arguments);
+//     console.log(`server is running on port ${port}`);
+//   });
+  
+
+//   app.listen = function(){
+//     var server = http1.createServer(this);
+//     return server.listen.apply(server, port);
+//   };
 
 let userList = new Map();
 
@@ -110,9 +132,6 @@ function removeUser(userName, id) {
     }
 }
 
-http.listen(process.env.PORT || 8000, () => {
-    console.log(`Server is running ${process.env.PORT || 8000}`);
-});
 
 
 // app.post("/api/deleteAllChat", function (req, res) {

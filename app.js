@@ -4,17 +4,15 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const multer = require('multer');
 const nodemailer = require("nodemailer");//for email send...
-// var email  = require('emailjs/email');//for email send 2....
-// var MongoStore=require('connect-mongo')(session)
 const path =require("path")
 const mongo = require("mongoose");
 var port=process.env.PORT||8000;
 var myModule = require('./model.js');
-const User = myModule.Users;
-const Item = myModule.Items;
-const myCart=myModule.myCarts;
-const myOrder=myModule.myOrders;
-const allReview=myModule.allReviews;
+// const User = myModule.Users;
+// const Item = myModule.Items;
+// const myCart=myModule.myCarts;
+// const myOrder=myModule.myOrders;
+// const allReview=myModule.allReviews;
 const Chats = myModule.Chats;
 
 
@@ -35,8 +33,7 @@ const mongoPath = 'mongodb+srv://chatmaster:Rishu12345@cluster0.dwucphr.mongodb.
 
 // const mongoPath = "mongodb+srv://fdplazaa:Rishu12345@cluster0.48xj2.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 // const mongoPath = 'mongodb+srv://chatmaster:Rishu12345@cluster0.dwucphr.mongodb.net/?retryWrites=true&w=majority';
-// const mongoPath="mongodb+srv://fdplazaa:Rishu12345@cluster0.48xj2.mongodb.net/test"
-// var db = mongo.connect("mongodb://127.0.0.1:27017/Olxdb", function (err, response) {node
+
 
 
 var db = mongo.connect(mongoPath, function (err, response) {
