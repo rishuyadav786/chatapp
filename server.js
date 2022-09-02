@@ -20,7 +20,7 @@ const app = express();
 
 
 const server=http.createServer(app);
-server.listen(8000);
+server.listen(port);
 // app.listen = function(){
 //     var server = http.createServer(this);
 //     return server.listen.apply(server, port);
