@@ -10,7 +10,7 @@ export class CommonService {
   activeUser
   apiUrl="https://chatrishu.herokuapp.com/";
   // webUrl="http://localhost:8000/"
-  webUrl="https://chatrishu.herokuapp.com/"
+  webUrl="https://chatsender.herokuapp.com/"
   constructor(private http: HttpClient) { 
     this.activeUser= localStorage.getItem("myUserName");
   }

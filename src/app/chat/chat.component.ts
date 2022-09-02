@@ -30,7 +30,7 @@ chats:any=[];
     this.userName = this.activeUser;
     this.activeUser= localStorage.getItem("myUserName");
    
-    this.socket = io.io(`https://chatrishu.herokuapp.com/?userName=${this.activeUser}`);
+    this.socket = io.io(`https://chatsender.herokuapp.com/?userName=${this.activeUser}`);
     // this.socket = io.io(SOCKET_ENDPOINT+`/?userName=${this.activeUser}`);
     this.userName = this.activeUser;
   
