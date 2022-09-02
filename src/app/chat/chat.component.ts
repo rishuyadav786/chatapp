@@ -23,6 +23,7 @@ export class ChatComponent implements OnInit,AfterViewChecked {
   messageList:any[]= [];
   userList: string[] = [];
   socket: any;
+ 
 chatWith;
 chats:any=[];
   constructor(private router:Router, private commonService:CommonService) {
@@ -87,7 +88,10 @@ sendMessage(): void {
   let trimTime=currentTime.toString().slice(4,21)
   console.log(trimTime)
   console.log("msg= "+this.message)
-  this.socket.emit('message', {message:this.message,time:trimTime});
+  if(this.message){
+    this.socket.emit('message', {message:this.message,time:trimTime});
+  }
+ 
   // this.messageList.push({message: this.message, userName: this.userName, mine: true});
   this.message = '';
 }
