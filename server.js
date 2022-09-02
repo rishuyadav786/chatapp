@@ -131,8 +131,8 @@ io.on('connection', (socket) => {
     socket.on('message', (msg) => {
         let currentTime=new Date();
         let trimTime=currentTime.toString().slice(4,21)
-        console.log("add appi = " + JSON.stringify(msg))
-        const message = new Chats({ message: msg, sender_id: userName ,time:trimTime})
+        console.log("message = " + JSON.stringify(msg.message)+" time"+msg.time)
+        const message = new Chats({ message: msg.message, sender_id: userName ,time:msg.time})
         message.save().then(() => {
             // io.emit('message-broadcast', msg);
             Chats.find().then(result => {
