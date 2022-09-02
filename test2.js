@@ -14,12 +14,12 @@ const app = express();
 
 
 const http = require('http').createServer(app);
-const io = require("socket.io")(http);
-// const io = require('socket.io')(http, {
-//     cors: {
-//         origin: '*'
-//     }
-// });
+// const io = require("socket.io")(http);
+const io = require('socket.io')(http, {
+    cors: {
+        origin: '*'
+    }
+});
 
 // http.listen(process.env.PORT || 8000, () => {
 //     console.log(`Server is running ${process.env.PORT || 8000}`);

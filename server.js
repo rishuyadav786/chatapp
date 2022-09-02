@@ -1,200 +1,3 @@
-// // Require express and create an instance of it
-// var express = require('express');
-// const mongo = require("mongoose");
-// var myModule = require('./model2.js');
-// const Chats = myModule.Chats;
-// var app = express();
-// const http = require("http");
-// var MongoClient = require('mongodb').MongoClient;
-// var url = "mongodb://localhost:27017/";
-
-// // mongo.set('useNewUrlParser', true);
-// // mongo.set('useFindAndModify', false);
-// // mongo.set('useCreateIndex', true);
-// // mongo.set('useUnifiedTopology', true);
-// // const mongoPath = 'mongodb+srv://chatmaster:Rishu12345@cluster0.dwucphr.mongodb.net/?retryWrites=true&w=majority';
-
-// const mongoPath = "mongodb+srv://fdplazaa:Rishu12345@cluster0.48xj2.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-// var db = mongo.connect(mongoPath, function (err, response) {
-//     if (err) {
-//         console.log("connection faild...." + err)
-//     }
-//     else {
-//         console.log("connected to" + db, "+", response);
-//     }
-// })
-
-
-
-// // MongoClient.connect(mongoPath, function(err, db) {
-// //   if (err) throw err;
-// //   var dbo = db.db("chatmaster");
-// //   dbo.createCollection("customers", function(err, res) {
-// //     if (err) throw err;
-// //     console.log("Collection created!");
-// //     db.close();
-// //   });
-// // });
-
-
-
-
-// http.createServer(function (req, res) {
-//   res.writeHead(200, {'Content-Type': 'text/html'});
-
-//   switch (req.url) {
-//             case "/books":
-//                 res.writeHead(200);
-//                 Chats.find({}).toArray(function(err, result) {
-//                     if (err) throw err;
-//                     var query = result;
-//                     db.close();
-//                     res.write(query);
-//                     res.end();
-//                 });
-//                 //     res.write(query);
-//                 //  res.end();
-//                 // res.end(getMessage());
-//                 // res.end(`{"message": "This is a books"}`);
-//                 break
-//             case "/authors":
-//                 res.writeHead(200);
-//                 // res.end(authors);
-//                 res.end(`{"message": "This is a author"}`);
-//                 break
-//             default:
-//                 res.writeHead(404);
-//                 res.end(JSON.stringify({error:"Resource not found Rishu"}));
-//         }
-
-// //   res.write('Hello World!'+req.url);
-// //   res.end();
-// }).listen(process.env.PORT || 3000);
-
-
-// function getMessage() {
-    
-// //    return  Chats.find();
-  
-// }
-
-// // const host = 'localhost';
-// // const port = process.env.PORT || 3000;
-
-// // const requestListener = function (req, res) {};
-
-// // const requestListener = function (req, res) {
-// //     res.setHeader("Content-Type", 'text/html');
-// //     res.writeHead(200);
-// //     res.end(`{"message": "This is a JSON response"}`);
-// // };
-
-// // const server = http.createServer(requestListener);
-
-// // server.listen(port, host, () => {
-// //     console.log(`Server is running on http://${host}:${port}`);
-// // });
-
-
-// // const books = JSON.stringify([
-// //     { title: "The Alchemist", author: "Paulo Coelho", year: 1988 },
-// //     { title: "The Prophet", author: "Kahlil Gibran", year: 1923 }
-// // ]);
-
-// // const authors = JSON.stringify([
-// //     { name: "Paulo Coelho", countryOfBirth: "Brazil", yearOfBirth: 1947 },
-// //     { name: "Kahlil Gibran", countryOfBirth: "Lebanon", yearOfBirth: 1883 }
-// // ]);
-
-// // const requestListener = function (req, res) {
-// //     res.setHeader("Content-Type", "application/json");
-// //     switch (req.url) {
-// //         case "/books":
-// //             res.writeHead(200);
-// //             // res.end(books);
-// //             res.end(`{"message": "This is a books"}`);
-// //             break
-// //         case "/authors":
-// //             res.writeHead(200);
-// //             // res.end(authors);
-// //             res.end(`{"message": "This is a author"}`);
-// //             break
-// //         default:
-// //             res.writeHead(404);
-// //             res.end(JSON.stringify({error:"Resource not found Rishu"}));
-// //     }
-// // }
-
-
-
-
-
-// // on the request to root (localhost:3000/)
-// // app.get('/', function (req, res) {
-// //     res.send('<b>My</b> first express http server');
-// // });
-
-// // // On localhost:3000/welcome
-// // app.get('/welcome', function (req, res) {
-// //     res.send('<b>Hello</b> welcome to my http server made with express');
-// // });
-
-// // // Change the 404 message modifing the middleware
-// // app.use(function(req, res, next) {
-// //     res.status(404).send("Sorry, that route doesn't exist. Have a nice day :)");
-// // });
-
-// // start the server in the port 3000 !
-// // app.listen(process.env.PORT || 3000, function () {
-// //     console.log('Example app listening on port 3000.');
-// // });
-
-
-
-
-
-
-
-// Require express and create an instance of it
-
-
-
-
-// -----------------------------------------------------------------------
-
-// var express = require('express');
-// var app = express();
-
-
-// const http = require("http");
-
-
-// http.createServer(function (req, res) {
-//   res.writeHead(200, {'Content-Type': 'text/html'});
-
-//   switch (req.url) {
-//             case "/books":
-//                 res.writeHead(200);
-//                 // res.end(books);
-//                 res.end(`{"message": "This is a books"}`);
-//                 break
-//             case "/authors":
-//                 res.writeHead(200);
-//                 // res.end(authors);
-//                 res.end(`{"message": "This is a author"}`);
-//                 break
-//             default:
-//                 res.writeHead(404);
-//                 res.end(JSON.stringify({error:"Resource not found Rishu"}));
-//         }
-
-// //   res.write('Hello World!'+req.url);
-// //   res.end();
-// }).listen(process.env.PORT || 3000);
-
-
-
-// -------------------------------------------------------------------------------------
 
 
 var express = require('express');
@@ -211,9 +14,10 @@ const Chats = myModule.Chats;
 const mongoPath = "mongodb+srv://fdplazaa:Rishu12345@cluster0.48xj2.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 
 
+// const http = require('http').createServer(app);
+// const io = require("socket.io")(http);
 
-
-http.createServer(function (req, res) {
+const server= http.createServer(function (req, res) {
     var flag;
     var chatsArr=[];
     var db = mongo.connect(mongoPath, function (err, response) {
@@ -273,4 +77,77 @@ Chats.find({},function(err, result) {
 // })
 }
   
-}).listen(process.env.PORT || 3000);
+}).listen(process.env.PORT || 8000);
+
+
+const io = require('socket.io')(server, {
+    cors: {
+        origin: '*'
+    }
+});
+
+
+
+
+
+let userList = new Map();
+
+io.on('connection', (socket) => {
+    let userName = socket.handshake.query.userName;
+    var activeUser=userName;
+    addUser(userName, socket.id);
+    socket.broadcast.emit('user-list', [...userList.keys()]);
+    socket.emit('user-list', [...userList.keys()]);
+  
+    Chats.find().then(result => {
+        // socket.emit('message-broadcast', result)
+        io.emit('message-broadcast', result)
+    })
+
+
+    socket.on('message', (msg) => {
+        let currentTime=new Date();
+        let trimTime=currentTime.toString().slice(4,21)
+        console.log("add appi = " + JSON.stringify(msg))
+        const message = new Chats({ message: msg, sender_id: userName ,time:trimTime})
+        message.save().then(() => {
+            // io.emit('message-broadcast', msg);
+            Chats.find().then(result => {
+                io.emit('message-broadcast', result)
+            })
+            // socket.emit('message-broadcast', {message: msg, sender_id: userName});
+        })
+        // socket.broadcast.emit('message-broadcast', {message: msg, userName: userName});
+        socket.emit('output-message', {message: msg, sender_id: userName});
+    })
+
+
+    // socket.on('message', (msg) => {
+    //     socket.broadcast.emit('message-broadcast', {message: msg, userName: userName});
+    // })
+    socket.on('disconnect', (reason) => {
+        removeUser(userName, socket.id);
+    })
+});
+
+function addUser(userName, id) {
+    if (!userList.has(userName)) {
+        userList.set(userName, new Set(id));
+    } else {
+        userList.get(userName).add(id);
+    }
+  
+}
+
+function removeUser(userName, id) {
+    if (userList.has(userName)) {
+        let userIds = userList.get(userName);
+        if (userIds.size == 0) {
+            userList.delete(userName);
+        }
+    }
+}
+
+
+
+
