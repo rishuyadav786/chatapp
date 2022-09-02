@@ -1,0 +1,99 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="#">Sender</a>
+
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="logout()" style="cursor: pointer;">Logout</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)=" clearChat()" style="cursor: pointer;">Clear All Chat</a>
+      </li>
+     
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"> {{activeUser}}</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+
+
+
+
+
+
+
+  <!-- <p style="color:white">{{ user }}</p> -->
+  <div class="chatbox_active_user" style="color:white" >
+    <span>Chat with </span><span  >{{ chatWith }}</span>
+  </div>
+  
+
+
+
+
+
+<div class="chatBox" #scrollMe>
+
+  <!-- <div class="chatbox"> -->
+  
+    
+      <div  *ngFor="let msg of messageList" >
+       
+            <div *ngIf="msg.sender_id==activeUser;else other_content" style="text-align: right;">
+             <div  class="first_user_message">
+              <p style="margin-bottom: -3px;text-align: left; ">{{ msg.message }}</p>
+              <small style="font-size:10px;text-align: right;">{{msg.time}}</small>
+             </div>
+         
+          </div>
+          
+          <ng-template #other_content> 
+            <div  class="second_user_message">
+              <p style="margin-bottom: -3px;text-align: left; ">{{ msg.message }}</p>
+              <small style="font-size:10px;text-align: right!important;margin-top:3px; float:right">{{msg.time}}</small>
+             </div>
+         
+          </ng-template>
+
+      
+      </div>
+  
+  <!-- </div> -->
+</div>
+<div class="inputForm">
+
+  <form >
+    <div class="form-row align-items-center">
+    
+      <div class="col-sm-10 my-1">
+        <label class="sr-only" for="inlineFormInputGroupUsername">Username</label>
+        <div class="input-group">
+          <!-- <div class="input-group-prepend">
+            <div class="input-group-text" (click)="home()" style="cursor: pointer;">@</div>
+          </div> -->
+          <textarea class="form-control" id="exampleFormControlTextarea1" [(ngModel)]="message"  name="message" rows="2"></textarea>
+        
+        </div>
+      </div>
+     
+      <div class="col-sm-2 my-1" style="text-align:right">
+        <button type="submit" class="btn btn-success"  (click)="sendMessage()"> <i class="bi bi-telegram"></i></button>
+      </div>
+    </div>
+  </form>
+  
+
+  </div>
+
+

@@ -1,0 +1,105 @@
+.chatbox_active_user {
+    margin-top: 10px;
+    margin-left: 25%;
+    width: 50%;
+    border: 1px solid #eee;
+    padding: 20px;
+    background: rgb(16, 75, 99);
+    border-radius: 4px 4px 0px 0px;
+}
+
+.chatBox {
+   
+    height: 70vh;
+    /* width: 100vw; */
+
+    width: 50%;
+
+    margin-left: 25%;
+    padding: 20px;
+    border: 1px solid #eee;
+   
+    overflow: auto;
+    background: white;
+
+}
+.bi{
+    font-size: 25px;;
+}
+.inputForm {
+    margin-left: 25%;
+    width: 50%;
+    border: 1px solid #eee;
+    padding: 20px;
+    background: #eee;
+    border-radius: 0px 0px 4px 4px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+}
+
+
+/* .chatbox {
+    background: white;
+    width: 100%;
+    height: 100%;
+    background: red;;
+    border-radius: 0.2em;
+    position: relative;
+    box-shadow: 1px 1px 12px rgba(0, 0, 0, 0.1);
+} */
+
+/* .messages_list {
+    overflow-y: auto;
+    height: 100%;
+} */
+
+
+.first_user_message {
+    color: white;
+    background: rgb(16, 75, 99);
+    width: auto;
+    margin: 5px;
+    padding: 5px 8px;
+    display: inline-block;
+    border-radius: 10px;
+    max-width: 70%;
+  
+
+}
+
+.second_user_message {
+    color: white;
+    background: #128C7E;
+    width: auto;
+    margin: 5px;
+    padding: 5px 8px;
+    display: inline-block;
+    border-radius: 10px;
+    max-width: 70%;
+}
+
+
+
+
+
+
+
+@media screen and (max-width:900px) {
+    .chatBox {
+        margin-left: 5%;
+        width: 90%!important;
+    }
+
+    .inputForm {
+        margin-left: 5%;
+        width: 90%;
+    }
+
+    .chatbox_active_user {
+        margin-left: 5%;
+        width: 90%;
+       
+    }
+}
