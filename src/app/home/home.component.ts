@@ -38,10 +38,10 @@ export class HomeComponent implements OnInit {
     console.log("All msg from home  2= " + JSON.stringify(this.users))
   })
     this.activeUser= localStorage.getItem("sender_email");
-    // if(this.activeUser){
+    if(this.activeUser){
       
-    //   this.router.navigate(['/chat']);
-    // }
+      this.router.navigate(['/chat']);
+    }
   }
   login(data){
    
