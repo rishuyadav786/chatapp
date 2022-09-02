@@ -8,8 +8,25 @@ const http = require("http");
 
 http.createServer(function (req, res) {
   res.writeHead(200, {'Content-Type': 'text/html'});
-  res.write('Hello World!');
-  res.end();
+
+  switch (req.url) {
+            case "/books":
+                res.writeHead(200);
+                // res.end(books);
+                res.end(`{"message": "This is a books"}`);
+                break
+            case "/authors":
+                res.writeHead(200);
+                // res.end(authors);
+                res.end(`{"message": "This is a author"}`);
+                break
+            default:
+                res.writeHead(404);
+                res.end(JSON.stringify({error:"Resource not found Rishu"}));
+        }
+
+//   res.write('Hello World!'+req.url);
+//   res.end();
 }).listen(process.env.PORT || 3000);
 
 
