@@ -1,94 +1,117 @@
-
-
-var express = require('express');
-var app = express();
-
-
-var http = require('http');
-var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://localhost:27017/MYDB";
+const bodyParser = require("body-parser");
+const path = require("path")
 const mongo = require("mongoose");
+const nodemailer = require("nodemailer");//for email send...
+var port = process.env.PORT || 8000;
 var myModule = require('./model2.js');
 const Chats = myModule.Chats;
+const Users = myModule.Users;
+const express = require('express');
+const cors = require('cors');
+var https = require('https');
+// var http = require('http');
+const app = express();
 
-const mongoPath = "mongodb+srv://fdplazaa:Rishu12345@cluster0.48xj2.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 
-
-// const http = require('http').createServer(app);
+const http = require('http').createServer(app);
 // const io = require("socket.io")(http);
-
-const server= http.createServer(function (req, res) {
-    var flag;
-    var chatsArr=[];
-    var db = mongo.connect(mongoPath, function (err, response) {
-        flag=response;
-    if (err) {
-        console.log("connection faild...." + err)
-    }
-    else {
-        if (err) throw err;
-        console.log("connected to" + db, "+", response);
-    }
-
-    
-//   response.collection("chats").find({}).toArray(function(err, result) {
-//     if (err) throw err;
-//     console.log(result);
-//     res.writeHead(200, {'Content-Type': 'text/html'});
-//     res.write('Hello World!'+JSON.stringify(result));
-//     res.end();
-// })
-   
-})
-
-res.writeHead(200, {'Content-Type': 'text/html'});
-
-switch (req.url) {
-    case "/api/books":
-        res.writeHead(200);
-        // res.end(books);
-        res.end(`{"message": "This is a books"}`);
-        break
-    case "/api/authors":
-        res.writeHead(200);
-        // res.end(authors);
-        res.end(`{"message": "This is a author"}`);
-        break
-    case "/api/allMessage":
-             
-Chats.find({},function(err, result) {
-    if (err) throw err;
-    console.log(result);
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.write('Hello World!'+JSON.stringify(result));
-    res.end();
-})
-        break
-    // default:
-        // res.writeHead(404);
-        // res.end(JSON.stringify({error:"Resource not found Rishu"}));
-        
-// Chats.find({},function(err, result) {
-//     if (err) throw err;
-//     console.log(result);
-//     res.writeHead(200, {'Content-Type': 'text/html'});
-//     res.write('Hello World!'+JSON.stringify(result));
-//     res.end();
-// })
-}
-  
-}).listen(process.env.PORT || 8000);
-
-
-const io = require('socket.io')(server, {
+const io = require('socket.io')(http, {
     cors: {
         origin: '*'
     }
 });
 
+// http.listen(process.env.PORT || 8000, () => {
+//     console.log(`Server is running ${process.env.PORT || 8000}`);
+// });
+
+http.listen(process.env.PORT || 8000, () => {
+    console.log(`Server is running ${process.env.PORT || 8000}`);
+});
+
+
+// var server = http.Server(app);
 
 
 
+
+// const server=http.createServer(app);
+// server.listen(port);
+
+// app.listen = function(){
+//     var server = http.createServer(app);
+//     console.log(`server is running on port ${port}`);
+//     return server.listen.apply(port);
+//   };
+
+// app.listen(port, () => {
+//     var server = http.createServer(this);
+//     console.log(`server is running on port ${port}`);
+//      return server.listen.apply(server, port);
+  
+//   });
+
+
+// const http3 = http.createServer(app);
+
+
+// app.listen(port, () => {
+  
+//     console.log(`server is running on port ${port}`);
+//   });
+  
+// http3.listen(8000);
+
+// http.createServer(app).listen(8000, ()=>{
+//     console.log('server is runing at port 8000')
+//   });
+
+
+// const io = require('socket.io')(server, {
+//     cors: {
+//         origin: '*'
+//     }
+// });
+
+
+// app.use(cors({ origin: "*" }));
+app.use(bodyParser.json());
+
+
+// ---------
+// const mongoPath = 'mongodb+srv://SenderChats:Rishu12345@cluster0.rwtbnbi.mongodb.net/?retryWrites=true&w=majority';
+// const mongoPath = 'mongodb+srv://chatmaster:Rishu12345@cluster0.dwucphr.mongodb.net/?retryWrites=true&w=majority';
+
+const mongoPath = "mongodb+srv://fdplazaa:Rishu12345@cluster0.48xj2.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+var db = mongo.connect(mongoPath, function (err, response) {
+    if (err) {
+        console.log("connection faild...." + err)
+    }
+    else {
+        console.log("connected to" + db, "+", response);
+    }
+})
+
+// Serve only the static files form the dist directory
+app.use(express.static('./dist/chatapp'));
+
+// http.listen(port, () => {
+//     console.log(`Server is running ${process.env.PORT || 8000}`);
+// });
+
+
+
+// app.listen(port, () => {
+//     // var server = http1.createServer(this);
+//     // return server.listen.apply(server, arguments);
+//     console.log(`server is running on port ${port}`);
+//   });
+  
+
+//   app.listen = function(){
+//     var server = http1.createServer(this);
+//     return server.listen.apply(server, port);
+//   };
 
 let userList = new Map();
 
@@ -150,4 +173,86 @@ function removeUser(userName, id) {
 
 
 
+app.post("/api/deleteAllChat", function (req, res) {
+    // model2.remove( { } );
+    Chats.remove({ }, function (err) {
+        if (err) {
+            res.send(err);
+        }
+        else {
+            res.send({ data: "Record has been Deleted" })
+        }
+    })
+})
 
+app.post("/api/deleteAllChat", function (req, res) {
+
+
+    var dbo = db.db("test");
+  dbo.collection("chats").drop(function(err, delOK) {
+    if (err) throw err;
+    if (delOK) console.log("Collection deleted");
+    db.close();
+  });
+
+
+
+    var mod = new Chats(req.body);
+    console.log("id"+JSON.stringify(req.body))
+    mod.remove( { }, true );
+    // mod.deleteOne({ _id: mod._id }, function (err) {
+    //     if (err) {
+    //         res.send(err);
+    //     }
+    //     else {
+    //         res.send({ data: "Record has been Deleted" })
+    //     }
+    // })
+})
+
+
+app.post("/api/removeData", function (req, res) {
+    var mod = new Chats(req.body);
+    console.log("id ="+JSON.stringify(mod))
+//   mod.remove( { } );
+
+Chats.remove({}, function (err) {
+        if (err) {
+            res.send(err);
+        }
+        else {
+            res.send({ data: "Record has been Deleted" })
+        }
+    })
+})
+
+
+app.get("/api/AllMessage", function (req, res) {
+    Chats.find({}, function (err, data) {
+        if (err) {
+            res.send(err)
+        }
+        else {
+            console.log("User data retrieved successfully")
+            res.send(data)
+
+        }
+    })
+});
+
+
+// io.on('connection', (socket) => {
+//     let userName = socket.handshake.query.userName;
+//     addUser(userName, socket.id);
+
+//     socket.broadcast.emit('user-list', [...userList.keys()]);
+//     socket.emit('user-list', [...userList.keys()]);
+
+//     socket.on('message', (msg) => {
+//         socket.broadcast.emit('message-broadcast', {message: msg, userName: userName});
+//     })
+
+//     socket.on('disconnect', (reason) => {
+//         removeUser(userName, socket.id);
+//     })
+// });

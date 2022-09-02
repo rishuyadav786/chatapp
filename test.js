@@ -46,6 +46,9 @@ express.get("/api/AllMessage", async (request, response) => {
         response.status(500).send({ message: e.message });
     }
 });
+
+
+
 let userList = new Map();
 
 io.on('connection', (socket) => {
