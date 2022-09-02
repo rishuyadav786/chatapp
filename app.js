@@ -9,8 +9,26 @@ const Users = myModule.Users;
 const express = require('express');
 const cors = require('cors');
 var https = require('https');
-var http = require('http');
+// var http = require('http');
 const app = express();
+
+
+const http = require('http').createServer(app);
+
+const io = require('socket.io')(http, {
+    cors: {
+        origin: '*'
+    }
+});
+
+// http.listen(process.env.PORT || 8000, () => {
+//     console.log(`Server is running ${process.env.PORT || 8000}`);
+// });
+
+http.listen(process.env.PORT || 8000, () => {
+    console.log(`Server is running ${process.env.PORT || 8000}`);
+});
+
 
 
 
@@ -85,11 +103,11 @@ app.use(express.static('./dist/chatapp'));
 
 
 
-app.listen(port, () => {
-    // var server = http1.createServer(this);
-    // return server.listen.apply(server, arguments);
-    console.log(`server is running on port ${port}`);
-  });
+// app.listen(port, () => {
+//     // var server = http1.createServer(this);
+//     // return server.listen.apply(server, arguments);
+//     console.log(`server is running on port ${port}`);
+//   });
   
 
 //   app.listen = function(){
@@ -97,117 +115,117 @@ app.listen(port, () => {
 //     return server.listen.apply(server, port);
 //   };
 
-// let userList = new Map();
+let userList = new Map();
 
-// io.on('connection', (socket) => {
-//     let userName = socket.handshake.query.userName;
-//     var activeUser=userName;
-//     addUser(userName, socket.id);
-//     socket.broadcast.emit('user-list', [...userList.keys()]);
-//     socket.emit('user-list', [...userList.keys()]);
+io.on('connection', (socket) => {
+    let userName = socket.handshake.query.userName;
+    var activeUser=userName;
+    addUser(userName, socket.id);
+    socket.broadcast.emit('user-list', [...userList.keys()]);
+    socket.emit('user-list', [...userList.keys()]);
   
-//     Chats.find().then(result => {
-//         // socket.emit('message-broadcast', result)
-//         io.emit('message-broadcast', result)
-//     })
+    Chats.find().then(result => {
+        // socket.emit('message-broadcast', result)
+        io.emit('message-broadcast', result)
+    })
 
 
-//     socket.on('message', (msg) => {
-//         let currentTime=new Date();
-//         let trimTime=currentTime.toString().slice(4,21)
-//         console.log("add appi = " + JSON.stringify(msg))
-//         const message = new Chats({ message: msg, sender_id: userName ,time:trimTime})
-//         message.save().then(() => {
-//             // io.emit('message-broadcast', msg);
-//             Chats.find().then(result => {
-//                 io.emit('message-broadcast', result)
-//             })
-//             // socket.emit('message-broadcast', {message: msg, sender_id: userName});
-//         })
-//         //socket.emit('message-broadcast', {message: msg, userName: userName});
-//     })
+    socket.on('message', (msg) => {
+        let currentTime=new Date();
+        let trimTime=currentTime.toString().slice(4,21)
+        console.log("add appi = " + JSON.stringify(msg))
+        const message = new Chats({ message: msg, sender_id: userName ,time:trimTime})
+        message.save().then(() => {
+            // io.emit('message-broadcast', msg);
+            Chats.find().then(result => {
+                io.emit('message-broadcast', result)
+            })
+            // socket.emit('message-broadcast', {message: msg, sender_id: userName});
+        })
+        //socket.emit('message-broadcast', {message: msg, userName: userName});
+    })
 
 
-//     // socket.on('message', (msg) => {
-//     //     socket.broadcast.emit('message-broadcast', {message: msg, userName: userName});
-//     // })
-//     socket.on('disconnect', (reason) => {
-//         removeUser(userName, socket.id);
-//     })
-// });
+    // socket.on('message', (msg) => {
+    //     socket.broadcast.emit('message-broadcast', {message: msg, userName: userName});
+    // })
+    socket.on('disconnect', (reason) => {
+        removeUser(userName, socket.id);
+    })
+});
 
-// function addUser(userName, id) {
-//     if (!userList.has(userName)) {
-//         userList.set(userName, new Set(id));
-//     } else {
-//         userList.get(userName).add(id);
-//     }
+function addUser(userName, id) {
+    if (!userList.has(userName)) {
+        userList.set(userName, new Set(id));
+    } else {
+        userList.get(userName).add(id);
+    }
   
-// }
+}
 
-// function removeUser(userName, id) {
-//     if (userList.has(userName)) {
-//         let userIds = userList.get(userName);
-//         if (userIds.size == 0) {
-//             userList.delete(userName);
-//         }
-//     }
-// }
-
-
-
-// app.post("/api/deleteAllChat", function (req, res) {
-//     // model2.remove( { } );
-//     Chats.remove({ }, function (err) {
-//         if (err) {
-//             res.send(err);
-//         }
-//         else {
-//             res.send({ data: "Record has been Deleted" })
-//         }
-//     })
-// })
-
-// app.post("/api/deleteAllChat", function (req, res) {
-
-
-//     var dbo = db.db("test");
-//   dbo.collection("chats").drop(function(err, delOK) {
-//     if (err) throw err;
-//     if (delOK) console.log("Collection deleted");
-//     db.close();
-//   });
+function removeUser(userName, id) {
+    if (userList.has(userName)) {
+        let userIds = userList.get(userName);
+        if (userIds.size == 0) {
+            userList.delete(userName);
+        }
+    }
+}
 
 
 
-//     var mod = new Chats(req.body);
-//     console.log("id"+JSON.stringify(req.body))
-//     mod.remove( { }, true );
-//     // mod.deleteOne({ _id: mod._id }, function (err) {
-//     //     if (err) {
-//     //         res.send(err);
-//     //     }
-//     //     else {
-//     //         res.send({ data: "Record has been Deleted" })
-//     //     }
-//     // })
-// })
+app.post("/api/deleteAllChat", function (req, res) {
+    // model2.remove( { } );
+    Chats.remove({ }, function (err) {
+        if (err) {
+            res.send(err);
+        }
+        else {
+            res.send({ data: "Record has been Deleted" })
+        }
+    })
+})
+
+app.post("/api/deleteAllChat", function (req, res) {
 
 
-// app.post("/api/removeData", function (req, res) {
-//     var mod = new Chats(req.body);
-//     console.log("id ="+JSON.stringify(mod))
-// //   mod.remove( { } );
+    var dbo = db.db("test");
+  dbo.collection("chats").drop(function(err, delOK) {
+    if (err) throw err;
+    if (delOK) console.log("Collection deleted");
+    db.close();
+  });
 
-// Chats.remove({}, function (err) {
-//         if (err) {
-//             res.send(err);
-//         }
-//         else {
-//             res.send({ data: "Record has been Deleted" })
-//         }
-//     })
-// })
+
+
+    var mod = new Chats(req.body);
+    console.log("id"+JSON.stringify(req.body))
+    mod.remove( { }, true );
+    // mod.deleteOne({ _id: mod._id }, function (err) {
+    //     if (err) {
+    //         res.send(err);
+    //     }
+    //     else {
+    //         res.send({ data: "Record has been Deleted" })
+    //     }
+    // })
+})
+
+
+app.post("/api/removeData", function (req, res) {
+    var mod = new Chats(req.body);
+    console.log("id ="+JSON.stringify(mod))
+//   mod.remove( { } );
+
+Chats.remove({}, function (err) {
+        if (err) {
+            res.send(err);
+        }
+        else {
+            res.send({ data: "Record has been Deleted" })
+        }
+    })
+})
 
 
 app.get("/api/AllMessage", function (req, res) {
