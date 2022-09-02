@@ -240,27 +240,30 @@ http.createServer(function (req, res) {
 res.writeHead(200, {'Content-Type': 'text/html'});
 
 switch (req.url) {
-    case "/books":
+    case "api/books":
         res.writeHead(200);
         // res.end(books);
         res.end(`{"message": "This is a books"}`);
         break
-    case "/authors":
+    case "api/authors":
         res.writeHead(200);
         // res.end(authors);
         res.end(`{"message": "This is a author"}`);
         break
-    default:
+    case "api/allMessage":
+        Chats.find({},function(err, result) {
+            if (err) throw err;
+            console.log(result);
+            res.writeHead(200, {'Content-Type': 'text/html'});
+            res.write('Hello World!'+JSON.stringify(result));
+            res.end();
+        })
+            break
+    // default:
         // res.writeHead(404);
         // res.end(JSON.stringify({error:"Resource not found Rishu"}));
         
-Chats.find({},function(err, result) {
-    if (err) throw err;
-    console.log(result);
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.write('Hello World!'+JSON.stringify(result));
-    res.end();
-})
+
 }
   
 }).listen(process.env.PORT || 3000);
