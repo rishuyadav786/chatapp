@@ -74,7 +74,7 @@ http.listen(process.env.PORT || 8000, () => {
 // });
 
 
-// app.use(cors({ origin: "*" }));
+app.use(cors({ origin: "*" }));
 app.use(bodyParser.json());
 
 
