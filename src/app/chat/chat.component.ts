@@ -24,6 +24,7 @@ export class ChatComponent implements OnInit,AfterViewChecked {
   userList: string[] = [];
   socket: any;
 chatWith;
+chats:any=[];
   constructor(private router:Router, private commonService:CommonService) {
     this.activeUser= localStorage.getItem("sender_email");
     this.userName = this.activeUser;
@@ -41,15 +42,17 @@ chatWith;
       // console.log("chat with ="+JSON.stringify(this.chatWith))
     });
     this.socket.on('output-message', (data) => {
-      // this.chats = data;
-      // console.log("from service"+ JSON.stringify(data))
+      this.chats.push(data);
+
+      console.log("from service"+ JSON.stringify(this.chats))
     });
   
     this.socket.on('message-broadcast', (data) => {
     
       if (data) {
         // console.log("all data="+JSON.stringify(data))
-        this.messageList=data;
+        this.messageList=this.chats
+        // this.messageList=data;
       }
     });
 

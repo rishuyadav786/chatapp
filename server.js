@@ -140,7 +140,8 @@ io.on('connection', (socket) => {
             })
             // socket.emit('message-broadcast', {message: msg, sender_id: userName});
         })
-        //socket.emit('message-broadcast', {message: msg, userName: userName});
+        // socket.broadcast.emit('message-broadcast', {message: msg, userName: userName});
+        socket.emit('output-message', {message: msg, sender_id: userName});
     })
 
 
