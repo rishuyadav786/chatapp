@@ -80,9 +80,9 @@ app.use(bodyParser.json());
 
 // ---------
 // const mongoPath = 'mongodb+srv://SenderChats:Rishu12345@cluster0.rwtbnbi.mongodb.net/?retryWrites=true&w=majority';
-const mongoPath = 'mongodb+srv://chatmaster:Rishu12345@cluster0.dwucphr.mongodb.net/?retryWrites=true&w=majority';
+// const mongoPath = 'mongodb+srv://chatmaster:Rishu12345@cluster0.dwucphr.mongodb.net/?retryWrites=true&w=majority';
 
-// const mongoPath = "mongodb+srv://fdplazaa:Rishu12345@cluster0.48xj2.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+const mongoPath = "mongodb+srv://fdplazaa:Rishu12345@cluster0.48xj2.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
 var db = mongo.connect(mongoPath, function (err, response) {
     if (err) {
         console.log("connection faild...." + err)
