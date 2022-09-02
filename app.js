@@ -1,16 +1,22 @@
 
-
-
+const express = require("express");
+const cors = require("cors");
 const bodyParser = require("body-parser");
-const path = require("path")
-const mongo = require("mongoose");
+const multer = require('multer');
 const nodemailer = require("nodemailer");//for email send...
-var port = process.env.PORT || 8000;
-var myModule = require('./model2.js');
+// var email  = require('emailjs/email');//for email send 2....
+// var MongoStore=require('connect-mongo')(session)
+const path =require("path")
+const mongo = require("mongoose");
+var port=process.env.PORT||8000;
+var myModule = require('./model.js');
+const User = myModule.Users;
+const Item = myModule.Items;
+const myCart=myModule.myCarts;
+const myOrder=myModule.myOrders;
+const allReview=myModule.allReviews;
 const Chats = myModule.Chats;
-const Users = myModule.Users;
-const express = require('express');
-const cors = require('cors');
+
 
 const app = express();
 const http = require('http').createServer(app);
@@ -21,43 +27,44 @@ const io = require('socket.io')(http, {
     }
 });
 
-// mongo.set('useNewUrlParser', true);
-// mongo.set('useFindAndModify', false);
-// mongo.set('useCreateIndex', true);
-// mongo.set('useUnifiedTopology', true);
+
 app.use(cors({ origin: "*" }));
 app.use(bodyParser.json());
 
-// ---------
-// const mongoPath = 'mongodb+srv://SenderChats:Rishu12345@cluster0.rwtbnbi.mongodb.net/?retryWrites=true&w=majority';
 const mongoPath = 'mongodb+srv://chatmaster:Rishu12345@cluster0.dwucphr.mongodb.net/?retryWrites=true&w=majority';
 
 // const mongoPath = "mongodb+srv://fdplazaa:Rishu12345@cluster0.48xj2.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+// const mongoPath = 'mongodb+srv://chatmaster:Rishu12345@cluster0.dwucphr.mongodb.net/?retryWrites=true&w=majority';
+// const mongoPath="mongodb+srv://fdplazaa:Rishu12345@cluster0.48xj2.mongodb.net/test"
+// var db = mongo.connect("mongodb://127.0.0.1:27017/Olxdb", function (err, response) {node
+
+
 var db = mongo.connect(mongoPath, function (err, response) {
     if (err) {
-        console.log("connection faild...." + err)
+        console.log("connection faild...."+err)
     }
     else {
         console.log("connected to" + db, "+", response);
     }
 })
 
-// Serve only the static files form the dist directory
-app.use(express.static('./dist/chatapp'));
 
 
-// ----------
-// app.get('/', (req, res) => {
-//     res.send('Heello world');
+// app.listen(port, () => {
+//     console.log("The server started on port"+ port+ "!!!!!!");
+// });
+
+
+
+// const uri = 'mongodb+srv://fdplazaa:Rishu12345@cluster0.48xj2.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+// mongo.connect(uri,{useNewUrlParser:true,useCreateIndex:true,useUnifiedTopology:true}
+//     );
+// const connection = mongo.connection;
+// connection.once('open',() =>{
+// console.log("mongoDB database connection established successfully"+uri);
 // })
-// app.use(express.static('./dist/sender'));
 
-// app.get('/*', (req, res) =>{
 
-//     console.log(`rishu server is running on port ${port}`);
-//     res.sendFile('index.html', {root: 'dist/chatapp/'})
-// }
-// );
 
 let userList = new Map();
 
@@ -116,63 +123,44 @@ function removeUser(userName, id) {
     }
 }
 
-http.listen(process.env.PORT || 8000, () => {
-    console.log(`Server is running ${process.env.PORT || 8000}`);
+
+
+
+app.listen(port, () => {
+  console.log(`server is running on port ${port}`);
 });
 
 
-// app.post("/api/deleteAllChat", function (req, res) {
-//     // model2.remove( { } );
-//     Chats.remove({ }, function (err) {
-//         if (err) {
-//             res.send(err);
-//         }
-//         else {
-//             res.send({ data: "Record has been Deleted" })
-//         }
-//     })
-// })
-
-app.post("/api/deleteAllChat", function (req, res) {
 
 
-    var dbo = db.db("test");
-  dbo.collection("chats").drop(function(err, delOK) {
-    if (err) throw err;
-    if (delOK) console.log("Collection deleted");
-    db.close();
-  });
-
-
-
-    var mod = new Chats(req.body);
-    console.log("id"+JSON.stringify(req.body))
-    mod.remove( { }, true );
-    // mod.deleteOne({ _id: mod._id }, function (err) {
-    //     if (err) {
-    //         res.send(err);
-    //     }
-    //     else {
-    //         res.send({ data: "Record has been Deleted" })
-    //     }
-    // })
+const storage = multer.diskStorage({
+    destination: (req, file, callBack) => {
+        callBack(null, '../../Angular/FoodPlaza/src/assets/')
+    },
+    filename: (req, file, callBack) => {
+        // callBack(null, `FoodPlaza_${file.originalname}`)//for using name before image name
+        callBack(null, `${file.originalname}`)
+    }
 })
 
+const upload = multer({ storage: storage })
 
-app.post("/api/removeData", function (req, res) {
-    var mod = new Chats(req.body);
-    console.log("id ="+JSON.stringify(mod))
-//   mod.remove( { } );
 
-Chats.remove({}, function (err) {
+
+
+
+app.get("/api/getUser", function (req, res) {
+    User.find({}, function (err, data) {
         if (err) {
-            res.send(err);
+            res.send(err)
         }
         else {
-            res.send({ data: "Record has been Deleted" })
+            console.log("User data retrieved successfully")
+            res.send(data)
+
         }
     })
-})
+});
 
 
 app.get("/api/AllMessage", function (req, res) {
@@ -189,18 +177,108 @@ app.get("/api/AllMessage", function (req, res) {
 });
 
 
-// io.on('connection', (socket) => {
-//     let userName = socket.handshake.query.userName;
-//     addUser(userName, socket.id);
+function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+  }
 
-//     socket.broadcast.emit('user-list', [...userList.keys()]);
-//     socket.emit('user-list', [...userList.keys()]);
 
-//     socket.on('message', (msg) => {
-//         socket.broadcast.emit('message-broadcast', {message: msg, userName: userName});
-//     })
 
-//     socket.on('disconnect', (reason) => {
-//         removeUser(userName, socket.id);
-//     })
-// });
+app.use(express.static('./dist/FoodPlaza'));
+
+app.get('/*', (req, res) =>{
+
+    console.log(`rishu server is running on port ${port}`);
+    res.sendFile('index.html', {root: 'dist/FoodPlaza/'})
+}
+);
+
+app.get("/api/display", (req, res) => {
+    res.sendFile(path.join(__dirname+"/display.html")
+    );
+});
+
+app.post('/file', upload.single('file'), (req, res, next) => {
+    const file = req.file;
+    console.log(file.filename);
+    if (!file) {
+        const error = new Error('No File')
+        error.httpStatusCode = 400
+        return next(error)
+    }
+    res.send(file);
+})
+
+app.post('/multipleFiles', upload.array('files'), (req, res, next) => {
+    const files = req.files;
+    console.log(files);
+    if (!files) {
+        const error = new Error('No File')
+        error.httpStatusCode = 400
+        return next(error)
+    }
+    res.send({ sttus: 'ok' });
+})
+
+
+
+// --------------------------------
+app.get("/sendmail1", (req, res) => {
+    res.send(
+        `<h1 style='text-align: center'>
+            Wellcome to FunOfHeuristic 
+            <br><br>
+            <b style="font-size: 182px;">😃👻</b>
+        </h1>`
+    );
+});
+// define a sendmail endpoint, which will send emails and response with the corresponding status
+
+
+app.post("/api/sendmail", (req, res) => {
+    console.log("request came");
+    let user = req.body;
+    console.log(user);
+
+    sendMail(user, (err, info) => {
+        if (err) {
+            console.log(err);
+            res.status(400);
+            res.send({ error: "Failed to send email" });
+        } else {
+            console.log("Email has been sent");
+            res.send(info);
+        }
+    });
+});
+
+
+
+const sendMail = (user, callback) => {
+
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        port: 587,
+        secure: false,
+        auth: {
+            user: 'rkvirus2@gmail.com',
+            pass: 'Rishu@12345'
+        }
+    });
+
+    var mailOptions = {
+        from: 'rkvirus2@gmail.com',
+        to: `${user.email}`,
+        subject: 'Verify FoodPlaza Account',
+        text: `Hi, thank you for regestring in FoodPlaza. Please verify your otp . your otp is = ${user.randomNumber}`
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+}
+
+
