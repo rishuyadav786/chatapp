@@ -6,31 +6,31 @@ var app = express();
 const http = require("http");
 
 
-// http.createServer(function (req, res) {
-//   res.writeHead(200, {'Content-Type': 'text/html'});
-//   res.write('Hello World!');
-//   res.end();
-// }).listen(process.env.PORT || 3000);
+http.createServer(function (req, res) {
+  res.writeHead(200, {'Content-Type': 'text/html'});
+  res.write('Hello World!');
+  res.end();
+}).listen(process.env.PORT || 3000);
 
 
 
 
-const host = 'localhost';
-const port = process.env.PORT || 3000;
+// const host = 'localhost';
+// const port = process.env.PORT || 3000;
 
 // const requestListener = function (req, res) {};
 
-const requestListener = function (req, res) {
-    res.setHeader("Content-Type", 'text/html');
-    res.writeHead(200);
-    res.end(`{"message": "This is a JSON response"}`);
-};
+// const requestListener = function (req, res) {
+//     res.setHeader("Content-Type", 'text/html');
+//     res.writeHead(200);
+//     res.end(`{"message": "This is a JSON response"}`);
+// };
 
-const server = http.createServer(requestListener);
+// const server = http.createServer(requestListener);
 
-server.listen(port, host, () => {
-    console.log(`Server is running on http://${host}:${port}`);
-});
+// server.listen(port, host, () => {
+//     console.log(`Server is running on http://${host}:${port}`);
+// });
 
 
 // const books = JSON.stringify([
