@@ -39,13 +39,13 @@ chats:any=[];
     this.socket.on('user-list', (userList: string[]) => {
       this.userList = userList;
       this.chatWith=this.userList.filter(res=>res!=this.activeUser)[0];
-      console.log("user list= "+JSON.stringify(userList))
+      // console.log("user list= "+JSON.stringify(userList))
       // console.log("chat with ="+JSON.stringify(this.chatWith))
     });
     this.socket.on('output-message', (data) => {
       this.chats.push(data);
 
-      console.log("from service"+ JSON.stringify(this.chats))
+      // console.log("from service"+ JSON.stringify(this.chats))
     });
   
     this.socket.on('message-broadcast', (data) => {
@@ -70,7 +70,7 @@ ngOnInit(): void {
   this.commonService.getAll().subscribe((data: Help[]) => {
     this.users = data;
    ;
-    console.log("user Data" + JSON.stringify(this.users))
+    // console.log("user Data" + JSON.stringify(this.users))
   })
 }
 ngAfterViewChecked() {        

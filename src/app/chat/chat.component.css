@@ -1,5 +1,5 @@
 .chatbox_active_user {
-    margin-top: 10px;
+    /* margin-top: 10px; */
     margin-left: 25%;
     width: 50%;
     border: 1px solid #eee;
@@ -88,18 +88,18 @@
 
 @media screen and (max-width:900px) {
     .chatBox {
-        margin-left: 5%;
-        width: 90%!important;
+        margin-left: 0%;
+        width: 100%!important;
     }
 
     .inputForm {
-        margin-left: 5%;
-        width: 90%;
+        margin-left: 0%;
+        width: 100%;
     }
 
     .chatbox_active_user {
-        margin-left: 5%;
-        width: 90%;
+        margin-left: 0%;
+        width: 100%;
        
     }
 }
