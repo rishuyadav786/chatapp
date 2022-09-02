@@ -1,20 +1,37 @@
-// // Require express and create an instance of it
-// var express = require('express');
-// var app = express();
+// Require express and create an instance of it
+var express = require('express');
+var app = express();
 
 
-// const http = require("http");
+const http = require("http");
 
-// const host = 'localhost';
-// const port = process.env.PORT || 3000;
 
-// // const requestListener = function (req, res) {};
+// http.createServer(function (req, res) {
+//   res.writeHead(200, {'Content-Type': 'text/html'});
+//   res.write('Hello World!');
+//   res.end();
+// }).listen(process.env.PORT || 3000);
 
-// // const requestListener = function (req, res) {
-// //     res.setHeader("Content-Type", "application/json");
-// //     res.writeHead(200);
-// //     res.end(`{"message": "This is a JSON response"}`);
-// // };
+
+
+
+const host = 'localhost';
+const port = process.env.PORT || 3000;
+
+// const requestListener = function (req, res) {};
+
+const requestListener = function (req, res) {
+    res.setHeader("Content-Type", 'text/html');
+    res.writeHead(200);
+    res.end(`{"message": "This is a JSON response"}`);
+};
+
+const server = http.createServer(requestListener);
+
+server.listen(port, host, () => {
+    console.log(`Server is running on http://${host}:${port}`);
+});
+
 
 // const books = JSON.stringify([
 //     { title: "The Alchemist", author: "Paulo Coelho", year: 1988 },
@@ -46,15 +63,10 @@
 // }
 
 
-// const server = http.createServer(requestListener);
-// server.listen(port, host, () => {
-//     console.log(`Server is running on http://${host}:${port}`);
-// });
 
 
 
-
-// // on the request to root (localhost:3000/)
+// on the request to root (localhost:3000/)
 // app.get('/', function (req, res) {
 //     res.send('<b>My</b> first express http server');
 // });
@@ -69,10 +81,10 @@
 //     res.status(404).send("Sorry, that route doesn't exist. Have a nice day :)");
 // });
 
-// // start the server in the port 3000 !
-// // app.listen(process.env.PORT || 3000, function () {
-// //     console.log('Example app listening on port 3000.');
-// // });
+// start the server in the port 3000 !
+// app.listen(process.env.PORT || 3000, function () {
+//     console.log('Example app listening on port 3000.');
+// });
 
 
 
@@ -82,12 +94,3 @@
 
 
 
-
-
-
-var http = require('http');
-http.createServer(function (req, res) {
-  res.writeHead(200, {'Content-Type': 'text/html'});
-  res.write('Hello World!');
-  res.end();
-}).listen(process.env.PORT || 3000);
