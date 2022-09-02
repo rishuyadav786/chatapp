@@ -25,7 +25,7 @@ const io = require('socket.io')(http, {
 //     console.log(`Server is running ${process.env.PORT || 8000}`);
 // });
 
-app.listen(process.env.PORT || 8000, () => {
+http.listen(process.env.PORT || 8000, () => {
     console.log(`Server is running ${process.env.PORT || 8000}`);
 });
 
