@@ -20,16 +20,38 @@ const app = express();
 
 
 const server=http.createServer(app);
-server.listen(port);
+// server.listen(port);
+
 // app.listen = function(){
-//     var server = http.createServer(this);
-//     return server.listen.apply(server, port);
+//     var server = http.createServer(app);
+//     console.log(`server is running on port ${port}`);
+//     return server.listen.apply(port);
 //   };
 
+// app.listen(port, () => {
+//     var server = http.createServer(this);
+//     console.log(`server is running on port ${port}`);
+//      return server.listen.apply(server, port);
+  
+//   });
 
-// const http3 = require('http').createServer(app);
 
-const io = require('socket.io')(server, {
+const http3 = http.createServer(app);
+
+
+// app.listen(port, () => {
+  
+//     console.log(`server is running on port ${port}`);
+//   });
+  
+// http3.listen(8000);
+
+// http.createServer(app).listen(8000, ()=>{
+//     console.log('server is runing at port 8000')
+//   });
+
+
+const io = require('socket.io')(http3, {
     cors: {
         origin: '*'
     }
@@ -63,11 +85,11 @@ app.use(express.static('./dist/chatapp'));
 
 
 
-// app.listen(port, () => {
-//     var server = http1.createServer(this);
-//     return server.listen.apply(server, arguments);
-//     console.log(`server is running on port ${port}`);
-//   });
+app.listen(port, () => {
+    // var server = http1.createServer(this);
+    // return server.listen.apply(server, arguments);
+    console.log(`server is running on port ${port}`);
+  });
   
 
 //   app.listen = function(){
