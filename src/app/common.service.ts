@@ -12,7 +12,7 @@ export class CommonService {
   // webUrl="http://localhost:8000/"
   webUrl="https://chatrishu.herokuapp.com/"
   constructor(private http: HttpClient) { 
-    this.activeUser= localStorage.getItem("sender_email");
+    this.activeUser= localStorage.getItem("myUserName");
   }
 
    

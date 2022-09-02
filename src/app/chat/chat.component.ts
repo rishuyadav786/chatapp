@@ -26,9 +26,9 @@ export class ChatComponent implements OnInit,AfterViewChecked {
 chatWith;
 chats:any=[];
   constructor(private router:Router, private commonService:CommonService) {
-    this.activeUser= localStorage.getItem("sender_email");
+    this.activeUser= localStorage.getItem("myUserName");
     this.userName = this.activeUser;
-    this.activeUser= localStorage.getItem("sender_email");
+    this.activeUser= localStorage.getItem("myUserName");
    
     this.socket = io.io(`https://chatrishu.herokuapp.com/?userName=${this.activeUser}`);
     // this.socket = io.io(SOCKET_ENDPOINT+`/?userName=${this.activeUser}`);
@@ -39,6 +39,7 @@ chats:any=[];
     this.socket.on('user-list', (userList: string[]) => {
       this.userList = userList;
       this.chatWith=this.userList.filter(res=>res!=this.activeUser)[0];
+      console.log("user list= "+JSON.stringify(userList))
       // console.log("chat with ="+JSON.stringify(this.chatWith))
     });
     this.socket.on('output-message', (data) => {
@@ -91,7 +92,7 @@ sendMessage(): void {
   this.message = '';
 }
 logout() {
-  localStorage.removeItem("sender_email");
+  localStorage.removeItem("myUserName");
 
 
   this.router.navigate(['/home']);

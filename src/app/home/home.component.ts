@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit {
    ;
     console.log("All msg from home  2= " + JSON.stringify(this.users))
   })
-    this.activeUser= localStorage.getItem("sender_email");
+    this.activeUser= localStorage.getItem("myUserName");
     if(this.activeUser){
       
       this.router.navigate(['/chat']);
@@ -55,7 +55,7 @@ export class HomeComponent implements OnInit {
     if(this.user.email=="rishuyadav" || this.user.email=="rijhuupad"  ){
       if(this.user.password=="Rijhu@#0705"){
         console.log("coming")
-        localStorage.setItem("sender_email", this.user.email);
+        localStorage.setItem("myUserName", this.user.email);
         this.router.navigate(['/chat']);
       }
       else{
