@@ -22,7 +22,7 @@ var User=new Schema({
 // var model= mongo.model("users",UsersSchema,"users");  data:Buffer, contentType:String
 
 var Chats=mongo.model("chats",Chat,"chats")
-var Users=mongo.model("users",User,"users")
+var Users=mongo.model("chatUsersData",User,"chatUsersData")
 
 // module.exports=Users
 // module.exports=Items

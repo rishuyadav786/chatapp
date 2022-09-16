@@ -5,7 +5,7 @@ const nodemailer = require("nodemailer");//for email send...
 var port = process.env.PORT || 8000;
 var myModule = require('./model2.js');
 const Chats = myModule.Chats;
-const Users = myModule.Users;
+const User = myModule.Users;
 const express = require('express');
 const cors = require('cors');
 var https = require('https');
@@ -132,7 +132,7 @@ io.on('connection', (socket) => {
         let currentTime=new Date();
         let trimTime=currentTime.toString().slice(4,21)
         console.log("message = " + JSON.stringify(msg.message)+" time"+msg.time)
-        const message = new Chats({ message: msg.message, sender_id: userName ,time:msg.time})
+        const message = new Chats({ message: msg.message, sender_id: userName, receiver_id:msg.receiver_id, time:msg.time})
         message.save().then(() => {
             // io.emit('message-broadcast', msg);
             Chats.find().then(result => {
@@ -222,6 +222,33 @@ Chats.remove({}, function (err) {
         }
         else {
             res.send({ data: "Record has been Deleted" })
+        }
+    })
+})
+
+
+app.get("/api/getUser", function (req, res) {
+    User.find({}, function (err, data) {
+        if (err) {
+            res.send(err)
+        }
+        else {
+            console.log("User data retrieved successfully")
+            res.send(data)
+
+        }
+    })
+});
+
+app.post("/api/SaveUser", function (req, res) {
+    var mod = new User(req.body);
+    console.log(mod);
+    mod.save(function (err, data) {
+        if (err) {
+            res.send({ data: "" + err })
+        }
+        else {
+            res.send({ data: "User Data Registerd Successfully" })
         }
     })
 })

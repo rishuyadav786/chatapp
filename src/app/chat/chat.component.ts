@@ -1,5 +1,5 @@
 import { Component, OnInit ,AfterViewChecked,ViewChild,ElementRef} from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 // import { Chats  } from '../help';
 import { from, of } from 'rxjs';
 import { CommonService  } from '../common.service';
@@ -23,10 +23,11 @@ export class ChatComponent implements OnInit,AfterViewChecked {
   messageList:any[]= [];
   userList: string[] = [];
   socket: any;
- 
+  receiverUser
 chatWith;
 chats:any=[];
-  constructor(private router:Router, private commonService:CommonService) {
+  constructor(private router:Router, private commonService:CommonService,private _Activatedroute:ActivatedRoute) {
+    this.receiverUser=this._Activatedroute.snapshot.paramMap.get("userEmail");
     this.activeUser= localStorage.getItem("myUserName");
     this.userName = this.activeUser;
     this.activeUser= localStorage.getItem("myUserName");
@@ -52,9 +53,17 @@ chats:any=[];
     this.socket.on('message-broadcast', (data) => {
     
       if (data) {
-        // console.log("all data="+JSON.stringify(data))
+        console.log("all msg  data="+JSON.stringify(data))
+        console.log("receiver id="+JSON.stringify(this.receiverUser))
         // this.messageList=this.chats
-        this.messageList=data;
+
+        // this.messageList=data;
+        this.messageList=data.filter(res=>{
+          
+          
+        return   (res.receiver_id==this.activeUser  && res.sender_id==this.receiverUser)||( res.sender_id==this.activeUser && res.receiver_id==this.receiverUser)
+        } );
+    
       }
     });
 
@@ -89,7 +98,7 @@ sendMessage(): void {
   console.log(trimTime)
   console.log("msg= "+this.message)
   if(this.message){
-    this.socket.emit('message', {message:this.message,time:trimTime});
+    this.socket.emit('message', {message:this.message,time:trimTime,receiver_id:this.receiverUser});
   }
  
   // this.messageList.push({message: this.message, userName: this.userName, mine: true});

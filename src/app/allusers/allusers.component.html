@@ -1,0 +1,7 @@
+
+
+<div  *ngFor="let user of users">
+    <div  class="container1" (click)="openChat(user.email)">
+{{user.name}}  {{user.email}}
+    </div>
+</div>

@@ -8,11 +8,13 @@ import { ChatComponent } from './chat/chat.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonService } from './common.service';
+import { AllusersComponent } from './allusers/allusers.component';
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    ChatComponent
+    ChatComponent,
+    AllusersComponent
   ],
   imports: [
     BrowserModule,
