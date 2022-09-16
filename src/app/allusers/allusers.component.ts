@@ -31,4 +31,16 @@ export class AllusersComponent implements OnInit {
     // this.router.navigate(['/chat']);
 
   }
+  logout() {
+    localStorage.removeItem("myUserName");
+  
+  
+    this.router.navigate(['/home']);
+   
+  
+  }
+  allUsers(){
+    this.router.navigate(['/allusers']);
+  }
+ 
 }
