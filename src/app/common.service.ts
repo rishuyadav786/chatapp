@@ -20,13 +20,13 @@ export class CommonService {
   }
   
 removeProduct(items){
-  console.log("coming.....")
+  
   // this.http.delete("http://localhost:3000/myItems/"+id).subscribe();
   // this.http.post("http://localhost:8000/api/removeData/", items[0]).subscribe();
   this.http.post(`${this.webUrl}`+"api/removeData/", items[0]).subscribe();
   }
   addUsers(users: any) {
-    console.log("ffrom servive"+JSON.stringify(users))
+   
     this.http.post(`${this.webUrl}`+"api/SaveUser/", users).subscribe();
   }
   

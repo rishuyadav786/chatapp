@@ -23,7 +23,7 @@ export class AllusersComponent implements OnInit {
   this.commonService.getAll().subscribe((data: Help[]) => {
     this.users = data.filter(res=>res.email!=this.activeUser);
    ;
-    console.log("All users= " + JSON.stringify(this.users))
+   
   })
   }
   openChat(userEmail){

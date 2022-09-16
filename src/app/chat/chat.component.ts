@@ -53,8 +53,7 @@ chats:any=[];
     this.socket.on('message-broadcast', (data) => {
     
       if (data) {
-        console.log("all msg  data="+JSON.stringify(data))
-        console.log("receiver id="+JSON.stringify(this.receiverUser))
+       
         // this.messageList=this.chats
 
         // this.messageList=data;
@@ -111,6 +110,9 @@ logout() {
   this.router.navigate(['/home']);
  
 
+}
+allUsers(){
+  this.router.navigate(['/allusers']);
 }
 clearChat(){
   this.commonService.removeProduct(this.messageList);
