@@ -9,3 +9,15 @@
     height: 70px;
     /* box-shadow: 3px 3px 3px #ddd; */
 }
+
+
+
+
+@media screen and (max-width:900px) {
+    .container1 {
+        margin-left: 2%;
+        width: 96%!important;
+    }
+
+    
+}
