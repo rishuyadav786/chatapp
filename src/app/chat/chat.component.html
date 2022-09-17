@@ -40,7 +40,7 @@
   <div class="chatbox_active_user" style="color:white" >
     <!-- <span>Chat with </span><span  >{{ chatWith }}</span> -->
     <span>Chat with </span><span  >{{ receiverUser }}</span>
-    <span *ngIf="chatWith.length>=1" style="float:right">online<span style="margin-left:10px;height: 10px;
+    <span *ngIf="chatWith==receiverUser" style="float:right">online<span style="margin-left:10px;height: 10px;
       width: 10px;
       background-color: rgb(6, 183, 47);
       border-radius: 50%;
