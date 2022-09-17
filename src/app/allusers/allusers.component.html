@@ -33,6 +33,17 @@
 
 <div  *ngFor="let user of users">
     <div  class="container1" (click)="openChat(user.email)">
-{{user.name}}  {{user.email}}
+        <div style="float:left; height: 50px;">
+            <img src="assets/avatar.jpg" style="width:50px; height:50px; border-radius: 50%;">
+        </div>
+            <div style="margin-left:30px;">
+                <div>
+                    <span style="margin-left:20px;">{{user.name}}  {{user.email}}</span>
+                </div>
+                <div>
+                    <span style="margin-left:20px;">new message....</span>
+                </div>
+            </div>
+
     </div>
 </div>

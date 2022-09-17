@@ -86,5 +86,8 @@ this.display=!this.display;
   addUser(data){
     console.log(this.user)
     this.commonService.addUsers(this.user)
+    this.display=!this.display;
+    this.user= new Help()
+    window.location.reload();
   }
 }
